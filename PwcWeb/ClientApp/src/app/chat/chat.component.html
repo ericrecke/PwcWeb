@@ -1,0 +1,12 @@
+<input type="text" [formControl]="nameControl" />
+<input #text type="text" [formControl]="textControl" />
+
+<input type="button" (click)="SendMessage()" value="Enviar" />
+<app-message *ngFor="let elemento of lstMessages | async" [oMessage]="elemento">
+</app-message>
+
+<app-message *ngFor="let subte of SubteInfo | async" [oSubte]="subte">
+</app-message>
+
+<app-message *ngFor="let subte of SubteInfoGTFS | async" [oSubte]="subte">
+</app-message>
