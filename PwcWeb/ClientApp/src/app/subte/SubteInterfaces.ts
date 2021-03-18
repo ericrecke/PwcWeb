@@ -53,7 +53,6 @@ export interface RootObject {
   entity: Entity[];
 }
 
-
 export interface Subte {
   Id: string;
   Letra: string;

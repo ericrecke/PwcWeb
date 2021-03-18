@@ -1,6 +1,5 @@
 <div *ngIf="SubteList as SubIn">
-  <h1 class="text-uppercase text-center"><!--Servicio de subtes--></h1>
-  <h4 class="text-uppercase text-center">Estado de los servicios</h4>
+  <h4 class="text-uppercase text-center text-white">Estado de los servicios</h4>
   <div class="row" style="margin-bottom: 50px;">
     <div class="card-deck">
       <div class="col-md-4 mb-3" *ngFor="let Linea of SubteList">
@@ -14,45 +13,10 @@
               <div class="sb-circle-txt">{{ Linea.letra }}</div>
             </div>
             <p class="card-text"> {{ Linea.descriptionInfo }}</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <a href="https://www.metrovias.com.ar/" target="_blank" class="btn btn-primary">Ir a Metrovias</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!--<div class="row">
-    <div class="col-md-3" *ngFor="let Linea of SubteList">
-      <div class="card">
-        <img class="card-img-top" src="../../assets/subte/subte.jpg" alt="Foto Subte" />
-        <div class="card-body">
-          <h4 class="card-title">{{ Linea.name }}</h4>
-          <p class="card-text"> {{ Linea.descriptionInfo }}</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>
-    </div>
-  </div>-->
-  <!--<div class="row">
-    <div class="col-md-12">
-      <div class="card" >
-        <img class="card-img-top" src="../../assets/subte/subte.jpg" alt="Foto Subte" />
-        <div class="card-body">
-          <ul>
-            <li *ngFor="let Linea of SubteList">
-              <div class="card">
-                <img class="card-img" src="../../assets/subte/subte.jpg" alt="Bg Subte" />
-                <div class="card-img-overlay">
-                  <h4 class="card-title">{{ Linea.name }}</h4>
-                  <p class="card-text"> {{ Linea.descriptionInfo }}</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>-->
-
 </div>

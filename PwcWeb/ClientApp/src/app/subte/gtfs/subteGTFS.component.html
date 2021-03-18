@@ -1,0 +1,83 @@
+<div class="card mb-5">
+  <div class="car-body">
+    <h4 class="text-uppercase text-center">Tiempos de Arribo</h4>
+    <!--<select name="lineSelect" [(ngModel)]="linesmodel">
+      <option [value]="item.id_Route" *ngFor="let item of SubwayGTFS">{{item.id_Route}}</option>
+    </select>
+    <select name="stationSelect">
+      <option [value]="Info.stop_id" *ngFor="let Info of SubwayGTFS[linesmodel]?.stations">{{Info.stop_id}}</option>
+    </select>-->
+    <div class="row" *ngIf="SubwayGTFS">
+      <div class="col-sm-3 ml-5 mb-3">
+        <select class="form-control" [(ngModel)]="lineSubway" id="lineS">
+          <option [value]="i" *ngFor="let item of SubwayGTFS?.gtfs; let i = index">{{item.id_Route}}</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <select class="form-control" id="stationS" [(ngModel)]="stationSubway">
+          <option *ngFor="let item of SubwayGTFS?.gtfs[lineSubway]?.stations; let i = index" [value]="item.id">{{item.stop_name}}</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <select class="form-control" id="destinationS" [(ngModel)]="destinationSubway">
+          <option [value]="item.id_Direction"  *ngFor="let item of SubwayGTFS?.gtfs[lineSubway]?.directions; let i = index">{{item.nameDirection}}</option>
+        </select>
+      </div>
+      <div class="col-sm-2">
+        <input class="btn btn-primary" type="button" (click)="SubwayGetGTFS('1')" style="width:100%;" value="Buscar" />
+      </div>
+    </div>
+    <div class="row" *ngIf="SubwayGTFS?.searchValue as values">
+      <div class="col-md-4 mb-3 mt-3 .offset-md-4">
+        <div class="card border-{{values.line}}">
+          <div class="card-body bg-{{values.line}}">
+            <div class="sb-circle sb-circle-{{values.line}}">
+              <div class="sb-circle-txt">{{ values.line }}</div>
+            </div>
+            <p class="card-text"> {{ values.time_Start }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="SubwayGTFS">
+  <div class="row" style="margin-bottom: 50px; display: block;">
+    <div class="card-deck">
+      <div class="col-sm-4 mb-3" *ngFor="let Station of SubwayGTFS?.gtfs">
+        <div class="card border-{{Station.line}}">
+          <div class="card-body bg-{{Station.line}}">
+            <div class="sb-circle sb-circle-{{Station.line}}">
+              <div class="sb-circle-txt">{{ Station.line }}</div>
+            </div>
+            <p class="card-text"> {{ Station.time_Start }}</p>
+            <div id="accordion{{Station.id}}">
+              <button class="btn btn-link bg-dark-{{Station.line}} text-white" style="width:100%;" data-toggle="collapse" [attr.data-target]="'#collapseMain'+Station.id" aria-expanded="false" aria-controls="collapseOne">
+                Estaciones de la Linea {{Station.line}}
+              </button>
+              <div id="collapseMain{{Station.id}}" class="collapse" aria-labelledby="accordion">
+                <div class="card" *ngFor="let Info of Station.stations; let i = index">
+
+                  <div class="card-header" style="padding: 0;" id="heading{{Info.stop_id}}">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" [attr.data-target]="'#collapse'+Info.stop_id" aria-expanded="false" [attr.aria-controls]="'collapse'+Info.stop_id">
+                        {{Info.stop_name}}
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="collapse{{Info.stop_id}}" class="collapse" [attr.aria-labelledby]="'heading'+Info.stop_id" [attr.data-parent]="'#accordion'+Station.id">
+                    <div class="card-body">
+                      Arribo {{Info.arrival.fecha | date: "dd/MM/yyyy h:mm"}}
+                      Subida {{Info.departure.fecha | date: "dd/MM/yyyy h:mm"}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

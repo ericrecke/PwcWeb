@@ -12,9 +12,12 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ChatComponent } from './chat/chat.component';
 import { MessageComponent } from './messages/message.component';
 import { SubteComponent } from './subte/subte.component';
+import { SubteGTFSComponent } from './subte/gtfs/subteGTFS.component';
+import { SubteHistoryComponent } from './subte/history/subwayHistory.component';
 //Services
 import { ChatService } from './service/chat.service';
 import { SubteService } from './service/subte.service';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +28,9 @@ import { SubteService } from './service/subte.service';
     FetchDataComponent,
     ChatComponent,
     MessageComponent,
-    SubteComponent
+    SubteComponent,
+    SubteGTFSComponent,
+    SubteHistoryComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,6 +42,8 @@ import { SubteService } from './service/subte.service';
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'chat', component: ChatComponent },
       { path: 'subte', component: SubteComponent },
+      { path: 'subte/gtfs', component: SubteGTFSComponent },
+      { path: 'subte/history', component: SubteHistoryComponent },
     ])
   ],
   providers: [ChatService, SubteService, DatePipe],

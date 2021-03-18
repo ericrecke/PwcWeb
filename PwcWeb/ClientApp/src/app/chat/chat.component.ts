@@ -14,7 +14,7 @@ export class ChatComponent {
 
   textControl = new FormControl("");
   nameControl = new FormControl("");
-  @ViewChild('text') text: ElementRef;
+  //@ViewChild('text') text: ElementRef;
 
   constructor(http: HttpClient, @Inject("BASE_URL") baseUrl: string, protected chatService: ChatService) {
     this.GetInfo();
@@ -31,6 +31,6 @@ export class ChatComponent {
         GetInfo();
     }, 300);
     this.textControl.setValue("");
-    this.text.nativeElement.focus();
+    //this.text.nativeElement.focus();
   }
 }
