@@ -36,7 +36,7 @@
 
 <p>Recordar de modificar el Startup.cs con las credenciales de la Base de Datos a utilizar (en el connection encontraran la conexión a la base de datos)</p>
 <p>En la carpeta Publish se encuentra la web Publicada y el Sql para levantar la base</p>
--------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------<br />
 1)      Se requiere una aplicación que permita obtener y persistir la siguiente información relacionada al estado del subterráneo de CABA usando la API abajo descrita. El objetivo es que el cliente pueda consultar la información por medio de una GUI. Modelar una solución de software que permita satisfacer estos requerimientos.
 
 a.- El estado actual del servicio para cada línea (ver API método /subtes/serviceAlerts)
