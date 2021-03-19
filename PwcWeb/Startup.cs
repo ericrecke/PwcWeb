@@ -29,7 +29,7 @@ namespace PwcWeb
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            var connection = @"Server=eric-pc\sqlexpress;DataBase=AngularChat;user id=sa;password=sqlcoop22;Trusted_Connection=True;ConnectRetryCount=0;";
+            var connection = @"Server=eric-pc\sqlexpress;DataBase=PwcWeb;user id=sa;password=sqlcoop22;Trusted_Connection=True;ConnectRetryCount=0;";
             //connectionString = "data source=ERIC-PC\SQLEXPRESS;initial catalog=CuentaCorrienteApp;persist security info=True;user id=sa;password=sqlcoop22;MultipleActiveResultSets=True;App=EntityFramework" providerName = "System.Data.SqlClient" />
 
             services.AddDbContext<MyDBContext>(options => options.UseSqlServer(connection));
