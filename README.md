@@ -1,5 +1,5 @@
 # Pwc-Web-ER
- Sitio web Eric Recke - PWC Argentina
+ Sitio web Eric Recke
 <div class="card" style="margin-bottom: 10rem;">
   <h1>Documentación</h1>
   <p>Se realizó el sitio web utilizando las herramientas de .Net Core y Angular como GUI.</p>
