@@ -1,14 +1,8 @@
 <div class="card mb-5">
   <div class="car-body">
     <h4 class="text-uppercase text-center">Tiempos de Arribo</h4>
-    <!--<select name="lineSelect" [(ngModel)]="linesmodel">
-      <option [value]="item.id_Route" *ngFor="let item of SubwayGTFS">{{item.id_Route}}</option>
-    </select>
-    <select name="stationSelect">
-      <option [value]="Info.stop_id" *ngFor="let Info of SubwayGTFS[linesmodel]?.stations">{{Info.stop_id}}</option>
-    </select>-->
     <div class="row" *ngIf="SubwayGTFS">
-      <div class="col-sm-3 ml-5 mb-3">
+      <div class="col-sm-3 mb-3" style="margin-bottom: 6rem;">
         <select class="form-control" [(ngModel)]="lineSubway" id="lineS">
           <option [value]="i" *ngFor="let item of SubwayGTFS?.gtfs; let i = index">{{item.id_Route}}</option>
         </select>
@@ -28,13 +22,15 @@
       </div>
     </div>
     <div class="row" *ngIf="SubwayGTFS?.searchValue as values">
-      <div class="col-md-4 mb-3 mt-3 .offset-md-4">
+      <div class="col-md-4 mb-3 mt-3 offset-md-4">
         <div class="card border-{{values.line}}">
           <div class="card-body bg-{{values.line}}">
             <div class="sb-circle sb-circle-{{values.line}}">
               <div class="sb-circle-txt">{{ values.line }}</div>
             </div>
-            <p class="card-text"> {{ values.time_Start }}</p>
+            <p class="card-text"> Horario de Comienzo: {{ values.time_Start }}</p>
+            <p class="card-text">Estacion {{ values.stations[0].stop_name }}</p>
+            <p class="card-text"> Arribo: {{ values.stations[0].arrival.fecha | date: "dd/MM/yyyy h:mm" }}</p>
           </div>
         </div>
       </div>
@@ -51,7 +47,10 @@
             <div class="sb-circle sb-circle-{{Station.line}}">
               <div class="sb-circle-txt">{{ Station.line }}</div>
             </div>
-            <p class="card-text"> {{ Station.time_Start }}</p>
+            <p class="card-text"> Horario de Comienzo: {{ Station.time_Start }}</p>
+            <p class="card-text"> Direcciones</p>
+            <p class="card-text" style="font-size:11px;"> {{ Station.directions[0].nameDirection }}</p>
+            <p class="card-text" style="font-size:11px;"> {{ Station.directions[1].nameDirection }}</p>
             <div id="accordion{{Station.id}}">
               <button class="btn btn-link bg-dark-{{Station.line}} text-white" style="width:100%;" data-toggle="collapse" [attr.data-target]="'#collapseMain'+Station.id" aria-expanded="false" aria-controls="collapseOne">
                 Estaciones de la Linea {{Station.line}}

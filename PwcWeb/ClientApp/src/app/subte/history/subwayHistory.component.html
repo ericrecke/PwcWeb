@@ -1,1 +1,39 @@
-<p>HISTORIAL</p>
+  <div class="card mb-5">
+    <div class="car-body">
+      <h4 class="text-uppercase text-center">Historial de Incidentes</h4>
+      <div class="row" *ngIf="HistorySubways">
+        <div class="col-sm-3 ml-5 mb-3">
+          <select class="form-control" [(ngModel)]="lineSubway" id="lineS">
+            <option [value]="item.id" *ngFor="let item of HistorySubways.lines; let i = index">{{item.id}}</option>
+          </select>
+        </div>
+        <div class="col-sm-3 ml-5 mb-3">
+          <input class="form-control" [(ngModel)]="dateSubway" type="date" id="datevalue" />
+        </div>
+        <div class="col-sm-2">
+          <input class="btn btn-primary" type="button" (click)="SubteHistoryGet()" style="width:100%;" value="Buscar" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom: 10rem;">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Linea</th>
+            <th scope="col">Resultado</th>
+            <th scope="col">Fecha</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of HistorySubways?.histories; let i = index">
+          <tr>
+            <td>{{item.line}}</td>
+            <td>{{item.result}}</td>
+            <td>{{item.date | date: "dd/MM/yyyy"}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

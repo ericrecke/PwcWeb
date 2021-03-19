@@ -1,7 +1,7 @@
 <header class="header-m">
   <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">PwcWeb</a>
+      <a class="navbar-brand" [routerLink]="['/']"><img class="nav-logo" src="../../assets/logo.png" /></a>
       <button class="navbar-toggler"
               type="button"
               data-toggle="collapse"
@@ -19,15 +19,6 @@
               [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
-          <!--<li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']">Counter</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/chat']">Chat</a>
-          </li>-->
           <li class="nav-item dropdown" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Subte</a>
             <div class="dropdown-menu">
@@ -36,14 +27,8 @@
               <a class="dropdown-item text-dark" [routerLink]="['/subte/history']">Historial de Incidentes</a>
             </div>
           </li>
-          <!--<li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/subte']">Estado del Servicio</a>
-          </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/subte']">Subte</a>
-          </li>-->
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/docs']">Documentación</a>
+            <a class="nav-link text-dark" [routerLink]="['/documentation']">Documentación</a>
           </li>
         </ul>
       </div>

@@ -14,6 +14,9 @@ body {
 .card-body-3 {
   background: #e9ecef url("../../assets/subte/subte4.png");
 }
+.card-body-4 {
+  background: #e9ecef url("../../assets/documents.jpg");
+}
 
 .card .img-home {
   height: 350px;

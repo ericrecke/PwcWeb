@@ -20,3 +20,10 @@ html {
 .header-m {
   width: 100%;
 }
+
+.nav-logo {
+  width: 150px;
+  height: 150px;
+  margin-top: -69px;
+  margin-bottom: -76px;
+}

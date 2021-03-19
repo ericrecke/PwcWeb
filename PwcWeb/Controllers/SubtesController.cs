@@ -10,66 +10,63 @@ using System.Threading.Tasks;
 
 namespace PwcWeb.Controllers
 {
+
     [ApiController]
     [Route("api/[controller]")]
     public class SubtesController : Controller
     {
+        private MyDBContext db;
+        public SubtesController(MyDBContext context)
+        {
+            db = context;
+        }
         public IActionResult Index()
         {
             return View();
         }
 
-        //[HttpGet("[action]")]
-        //public Subtes GetSubtes()
-        //{
-        //    var Url = UrbanConfig.ApiUrl + UrbanConfig.EnumTypeServices.subtes.ToString() + "/serviceAlerts?json=1&client_id=" + UrbanConfig.ClientId + "&client_secret=" + UrbanConfig.ClientSecret;
-        //    var client = new RestClient(Url);
-        //    var request = new RestRequest(Method.GET);
-        //    IRestResponse response = client.Execute(request);
-        //    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-        //    {
-        //        var JsonData = JsonConvert.DeserializeObject<Subtes>(response.Content);
-        //        if (JsonData == null)
-        //            return new Subtes(); //or any other error code accordingly. Bad request is a strong candidate also.
-        //        return JsonData;
-        //    }
-        //    else
-        //    {
-        //        return new Subtes();
-        //    }
-        //}
         [HttpGet("[action]")]
         public List<SubtesReturn> GetSubtes()
         {
-            List<SubtesReturn> NewList = new List<SubtesReturn>();
-            var Url = UrbanConfig.ApiUrl + UrbanConfig.EnumTypeServices.subtes.ToString() + "/serviceAlerts?json=1&client_id=" + UrbanConfig.ClientId + "&client_secret=" + UrbanConfig.ClientSecret;
-            var client = new RestClient(Url);
-            var request = new RestRequest(Method.GET);
-            IRestResponse response = client.Execute(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            try
             {
-                var JsonData = JsonConvert.DeserializeObject<Subtes>(response.Content);
-                foreach (var md in JsonData.entity)
+                List<SubtesReturn> NewList = new List<SubtesReturn>();
+                var Url = UrbanConfig.ApiUrl + UrbanConfig.EnumTypeServices.subtes.ToString() + "/serviceAlerts?json=1&client_id=" + UrbanConfig.ClientId + "&client_secret=" + UrbanConfig.ClientSecret;
+                var client = new RestClient(Url);
+                var request = new RestRequest(Method.GET);
+                IRestResponse response = client.Execute(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    var NewModel = new SubtesReturn()
+                    var JsonData = JsonConvert.DeserializeObject<Subtes>(response.Content);
+                    foreach (var md in JsonData.entity)
                     {
-                        Id = md.id,
-                        Letra = md.alert.informed_entity[0].route_id.Replace("Linea", ""),
-                        Name = md.alert.informed_entity[0].route_id,
-                        DescriptionInfo = md.alert.description_text.translation[0].text,
-                        HeaderInfo = md.alert.header_text.translation[0].text,
-                        Fecha = new DateTime(1970, 1, 1).Add(TimeSpan.FromSeconds(JsonData.header.timestamp)).ToLocalTime()
-                    };
-                    NewList.Add(NewModel);
+                        var NewModel = new SubtesReturn()
+                        {
+                            Id = md.id,
+                            Letra = md.alert.informed_entity[0].route_id.Replace("Linea", ""),
+                            Name = md.alert.informed_entity[0].route_id,
+                            DescriptionInfo = md.alert.description_text.translation[0].text,
+                            HeaderInfo = md.alert.header_text.translation[0].text,
+                            Fecha = new DateTime(1970, 1, 1).Add(TimeSpan.FromSeconds(JsonData.header.timestamp)).ToLocalTime()
+                        };
+                        NewList.Add(NewModel);
+                        AddLog(NewModel);
+                    }
+                    db.SaveChanges();
+                    if (JsonData == null)
+                        return new List<SubtesReturn>(); //or any other error code accordingly. Bad request is a strong candidate also.
+                    return NewList;
                 }
-                if (JsonData == null)
-                    return new List<SubtesReturn>(); //or any other error code accordingly. Bad request is a strong candidate also.
-                return NewList;
+                else
+                {
+                    return new List<SubtesReturn>();
+                }
             }
-            else
+            catch (Exception ex)
             {
                 return new List<SubtesReturn>();
             }
+
         }
 
 
@@ -115,6 +112,31 @@ namespace PwcWeb.Controllers
             }
         }
 
+        [HttpGet("[action]")]
+        public HistoryViewModel GetHistories(DateTime FechaDesde = new DateTime(), string Line = "0")
+        {
+            var TakeHistories = new HistoryViewModel();
+            var Fecha = FechaDesde.Date;
+            TakeHistories.Histories = db.SubwayHistory.Where(x => ((Line == "0" || Line == "Todas las Lineas") || x.Line == Line) && (FechaDesde == null || x.Date == Fecha)).ToList();
+            TakeHistories.Lines.Add(new LineName() { Id = "Todas las Lineas" });
+            TakeHistories.Lines.AddRange(db.SubwayHistory.Select(x => new LineName { Id = x.Line }).Distinct().ToList());
+            return TakeHistories;
+        }
+
+        #region Functions
+        public void AddLog(SubtesReturn Data)
+        {
+            var CheckDate = db.SubwayHistory.Where(x => x.Date == DateTime.Today && x.Line == Data.Name).FirstOrDefault();
+            if (CheckDate != null)
+            {
+                CheckDate.Result = Data.DescriptionInfo;
+                db.Entry(CheckDate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            }
+            else
+            {
+                db.SubwayHistory.Add(new SubwayHistory() { Date = DateTime.Today, Line = Data.Name, Result = Data.DescriptionInfo });
+            }
+        }
         public SubwayGtfs LoadSubway(EntityGTFS Entity)
         {
             var NewModel = new SubwayGtfs()
@@ -141,46 +163,6 @@ namespace PwcWeb.Controllers
             return NewModel;
         }
 
-        //[HttpGet("[action]")]
-        //public async IAsyncEnumerable<IActionResult> GetSubtes()
-        //{
-        //    var Url = UrbanConfig.ApiUrl + UrbanConfig.EnumTypeServices.subtes.ToString() + "/serviceAlerts?json=1&client_id=" + UrbanConfig.ClientId + "&client_secret=" + UrbanConfig.ClientSecret;
-        //    var client = new RestClient(Url);
-        //    var request = new RestRequest(Method.GET);
-        //    IRestResponse response = await client.ExecuteAsync(request);
-        //    if(response.StatusCode == System.Net.HttpStatusCode.OK)
-        //    {
-        //        var JsonData = JsonConvert.DeserializeObject<Subtes>(response.Content);
-        //        List<Subtes> Subtes = new List<Subtes>();
-        //        Subtes.Add(JsonData);
-        //        if (JsonData == null)
-        //            yield return NotFound(); //or any other error code accordingly. Bad request is a strong candidate also.
-        //        yield return Ok(Subtes);
-        //    } else
-        //    {
-        //        yield return NotFound();
-        //    }
-        //}
-
-        //[HttpGet("[action]")]
-        //public async IAsyncEnumerable<IActionResult> GetSubtesGTFS()
-        //{
-        //    var Url = UrbanConfig.ApiUrl + UrbanConfig.EnumTypeServices.subtes.ToString() + "/forecastGTFS?client_id=" + UrbanConfig.ClientId + "&client_secret=" + UrbanConfig.ClientSecret;
-        //    var client = new RestClient(Url);
-        //    var request = new RestRequest(Method.GET);
-        //    IRestResponse response = await client.ExecuteAsync(request);
-        //    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-        //    {
-        //        var JsonData = JsonConvert.DeserializeObject<SubtesGTFS>(response.Content);
-        //        if (JsonData == null)
-        //            yield return NotFound(); //or any other error code accordingly. Bad request is a strong candidate also.
-        //        yield return Ok(JsonData);
-        //    }
-        //    else
-        //    {
-        //        yield return NotFound();
-        //    }
-
-        //}
+        #endregion
     }
 }
