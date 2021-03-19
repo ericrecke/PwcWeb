@@ -33,3 +33,5 @@
   </p>
   <p>Se uso .Net Core, con Angular. Al igual que tambien se usaron extensiones de Bootstrap, Typescript(Un Inject para la url, HttpClient, HttpHeaders, HttpParams para los recibos de Información)</p>
 </div>
+
+<p>Recordar de modificar el Startup.cs con las credenciales de la Base de Datos a utilizar (en el connection encontraran la conexión a la base de datos)</p>
