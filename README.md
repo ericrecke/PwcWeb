@@ -35,3 +35,16 @@
 </div>
 
 <p>Recordar de modificar el Startup.cs con las credenciales de la Base de Datos a utilizar (en el connection encontraran la conexión a la base de datos)</p>
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+1)      Se requiere una aplicación que permita obtener y persistir la siguiente información relacionada al estado del subterráneo de CABA usando la API abajo descrita. El objetivo es que el cliente pueda consultar la información por medio de una GUI. Modelar una solución de software que permita satisfacer estos requerimientos.
+
+a.- El estado actual del servicio para cada línea (ver API método /subtes/serviceAlerts)
+
+b.- Dada una Línea, Estación y Destino de subte (ver API método /subtes/forecastGTFS) indique el tiempo estimado de arribo del próximo tren.
+
+c.- Mostrar un histórico de Incidentes (proviene de las consultas del punto a) sucedidos para una línea en una rango de fechas. 
+
+
+2)      Basados en esta API, ¿qué otros servicios se podrían brindar al cliente?
+<p> Otros servicios que pueden utilizarse aparte del de recibir datos del subte es hacerlo más generico debido a que se puede obtener información de los monopatines, el subte, trenes, colectivos, ecobici, estacionamientos, información del transito y de datos como el transito mensual (vehicular)</p>
